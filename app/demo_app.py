@@ -41,10 +41,16 @@ st.write(
     "the sentiment is positive, neutral, or negative."
 )
 
-user_text = st.text_area("Twi text", "Me pɛ wo paa")
+user_text = st.text_area(
+    "Twi text",
+    placeholder="Type a Twi sentence here..."
+)
 
 if st.button("Analyse sentiment"):
-    tokenizer, model = load_model()
-    label, score = predict(user_text, tokenizer, model)
-    st.write(f"**Sentiment:** {label}")
-    st.write(f"Confidence: {score:.3f}")
+    if not user_text.strip():
+        st.warning("Please enter a Twi sentence first.")
+    else:
+        tokenizer, model = load_model()
+        label, score = predict(user_text, tokenizer, model)
+        st.write(f"**Sentiment:** {label}")
+        st.write(f"Confidence: {score:.3f}")
